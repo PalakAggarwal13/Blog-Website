@@ -1,5 +1,6 @@
-const monogoose = require("mongoose");
-
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
+const model = mongoose.model;
 const blogSchema = new mongoose.Schema({
     title:{
         type:String,
