@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const path = require ("path");
 const userRoute = require("./routes/user");
+const blogRoute = require("./routes/blog");
 const cookieParser = require("cookie-parser");
 const { checkForAuthenticationCookie } = require("./middlewares/authentication");
 
@@ -26,5 +27,6 @@ app.get("/",(req,res)=>{
 })
 
 app.use("/user" , userRoute);
+app.use("/blog",blogRoute);
 
 app.listen(PORT,()=>console.log(`Server Statrted at PORT:${PORT}`));
