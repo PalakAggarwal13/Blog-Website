@@ -1,5 +1,5 @@
 const {Router} = require("express");
-const User = require("../models/user");
+const {User} = require("../models/user");
 
 const router = Router();
 
@@ -21,6 +21,14 @@ router.post("/signup", async(req,res)=>{
     password,
   });
   return res.redirect("/");
+})
+
+router.post("/signin" , async(req,res)=>{
+    const {email,password} = req.body;
+    const user = User.matchPassword(email,password);
+
+    console.log("User",user);
+    return res.redirect("/");
 })
 
 

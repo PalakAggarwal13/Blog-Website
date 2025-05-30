@@ -2,16 +2,13 @@
 <html lang="en">
 <head>
     <%- include("./partials/head") %>
-    <title>SignUp</title>
+    <title>SignIn</title>
 </head>
 <body>
     <%- include("./partials/nav") %>
     <div class="conatiner mt-4">
-<form class="row g-3" action="/user/signup" method="post">
-    <div class="col-md-6">
-    <label for="fullName" class="form-label">Full Name</label>
-    <input type="text" class="form-control" name="fullName" id="fullName">
-  </div>
+<form class="row g-3" action="/user/signin" method="post">
+    
   <div class="col-md-6">
     <label for="inputEmail4" class="form-label">Email</label>
     <input type="email" class="form-control" name="email" id="inputEmail4">

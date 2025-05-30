@@ -1,7 +1,7 @@
-const {Schema,model} = require("mongoose");
+const mongoose = require("mongoose");
 const {createHmac,randomBytes} = require("crypto");
 
-const userSchema = new Schema({
+const userSchema = new mongoose.Schema({
     fullName:{
         type:String,
         required:true,
@@ -13,7 +13,6 @@ const userSchema = new Schema({
     },
     salt:{
         type:String,
-        required:true,
     },
     password:{
         type:String,
@@ -45,7 +44,21 @@ this.password = hashedPassword;
 
 next();
 })
-const User = model("user",userSchema);
+
+userSchema.static("matchPassword", async function(email,password){
+    const user = await this.findOne({email});
+    if(!user) throw new Error("User not found!");
+
+    const salt = user.salt;
+    const hashedPassword = user.password;
+
+    const userProvidedHash = createHmac("sha256",salt).update(password).digest("hex");
+
+    if(userProvidedHash!==hashedPassword) throw new Error("Incorrect Password!");
+
+    return user;
+})
+const User = mongoose.model("user",userSchema);
 
 module.exports = {
     User,

@@ -12,6 +12,8 @@ mongoose.connect("mongodb://localhost:27017/nlogify")
 app.set("view engine","ejs");
 app.set("views", path.resolve("./views"));
 
+app.use(express.urlencoded({extended:false}));
+
 app.get("/",(req,res)=>{
     return res.render("home");
 })
