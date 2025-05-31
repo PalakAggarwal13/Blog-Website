@@ -3,6 +3,7 @@ const fs = require("fs");
 const multer = require("multer");
 const path = require("path");
 const Blog = require("../models/blog");
+const Comment = require("../models/comment");
 const {checkForAuthenticationCookie} = require("../middlewares/authentication");
 
 const router = Router();
@@ -69,5 +70,13 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+router.post("/comment/:blogId", async(req,res)=>{
+await Comment.create({
+    content: req.body.content,
+    blogId: req.params.blogId,
+    createdBy: req.user._id,
+  });
+  return res.redirect(`/blog/${req.params.blogId}`);
+})
 
 module.exports = router;

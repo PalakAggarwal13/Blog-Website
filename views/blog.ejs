@@ -15,6 +15,15 @@
 <div class="container mt-4">
     <img src="<%= blog.createdBy.profileImageURL %>"width="50px"/> <%= blog.createdBy.fullName %>
 </div>
+
+<div class="container mt-3">
+    <h1>Comments</h1>
+    <form>
+  <div class="col-md-6">
+    <input type="text" class="form-control" name="content" placeholder="Enter your comment">
+  </div>
+    </form>
+</div>
     <%- include("./partials/scripts") %>
 </body>
 </html>
