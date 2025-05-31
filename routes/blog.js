@@ -55,7 +55,7 @@ router.get("/:id", async (req, res) => {
   try {
     const blogId = req.params.id;
     const blog = await Blog.findById(blogId).populate("createdBy");
-
+    const comments = await Comment.find({blogId:req.params.id}).populate("createdBy");
     if (!blog) {
       return res.status(404).send("Blog post not found");
     }
@@ -63,6 +63,7 @@ router.get("/:id", async (req, res) => {
     return res.render("blog", {
       blog,
       user: req.user,
+      comments,
     });
   } catch (error) {
     console.error("Error fetching blog:", error);
