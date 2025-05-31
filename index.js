@@ -4,6 +4,7 @@ const path = require ("path");
 const userRoute = require("./routes/user");
 const blogRoute = require("./routes/blog");
 const cookieParser = require("cookie-parser");
+const methodOverride = require("method-override");
 const { checkForAuthenticationCookie } = require("./middlewares/authentication");
 
 const Blog = require("./models/blog");
@@ -21,6 +22,7 @@ app.use(express.urlencoded({extended:false}));
 app.use(cookieParser());
 app.use(checkForAuthenticationCookie("token"));
 app.use(express.static(path.resolve("./public")));
+app.use(methodOverride('_method'));
 
 app.get("/", async (req,res)=>{
     try{

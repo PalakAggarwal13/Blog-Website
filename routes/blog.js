@@ -80,4 +80,27 @@ await Comment.create({
   return res.redirect(`/blog/${req.params.blogId}`);
 })
 
+router.post("/delete/:id", async (req, res) => {
+  if (!req.user) return res.status(401).send("Unauthorized");
+
+  try {
+    const blog = await Blog.findById(req.params.id);
+
+    if (!blog) return res.status(404).send("Blog not found");
+
+    // Check if the logged-in user is the owner
+    if (!blog.createdBy.equals(req.user._id)) {
+      return res.status(403).send("Forbidden: You can't delete this blog");
+    }
+
+    // Delete the blog
+    await Blog.findByIdAndDelete(req.params.id);
+    return res.redirect("/");
+  } catch (error) {
+    console.error("Error deleting blog:", error);
+    return res.status(500).send("Internal Server Error");
+  }
+});
+
+
 module.exports = router;
