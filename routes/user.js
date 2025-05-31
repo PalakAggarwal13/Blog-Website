@@ -15,13 +15,21 @@ router.get("/signin",(req,res)=>{
 
 router.post("/signup", async(req,res)=>{
   const {fullName,email,password} = req.body;
-  await User.create({
+  try{
+    await User.create({
     fullName,
     email,
     password,
   });
   return res.redirect("/");
-})
+  }catch(error){
+     let message = "Something went wrong.";
+    if (error.code === 11000) {
+      message = "Email is already registered.";
+  }
+  return res.render("signup", { error: message });
+}
+});
 
 router.post("/signin" , async(req,res)=>{
     const {email,password} = req.body;
